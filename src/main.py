@@ -9,6 +9,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.boxlayout import  BoxLayout
 from kivy.properties import (
     ObjectProperty, NumericProperty, StringProperty, ReferenceListProperty)
 from kivy.resources import resource_add_path
@@ -133,20 +134,20 @@ class LicensePopupLayout(RelativeLayout):
     license_showing = StringProperty(LICENSE_SHOWING)
 
 
-class LicensePopup(Popup):
+class LicensePopup(ClosablePopup):
     def __init__(self, close_function=None, **kwargs):
-        super().__init__(**kwargs)
-        self.content = LicensePopupLayout()
-        self.close_function = close_function
-
-        def close():
-            self.dismiss()
-            if self.close_function:
-                self.close_function()
-        self.content.close = close
+        super().__init__(LicensePopupLayout(), **kwargs)
 
 
-class LicenseScreen(Screen):
+class TaskListItemCard(BoxLayout):
+    pass
+
+
+class ShowingCurrentTaskLayout(Popup):
+    pass
+
+
+class ShowingCurrentTaskPopup(Popup):
     pass
 
 
@@ -168,6 +169,10 @@ class TaskordApp(App):
         root_widget = TaskordScreenManager()
         root_widget.add_widget(MainScreen(name="main"))
         return root_widget
+
+    def show_license(self):
+        popup = LicensePopup()
+        popup.open()
 
 
 def main():
