@@ -114,6 +114,20 @@
 #                 size_hint_x: 0.22
 #                 on_release: root.close()
 
+<TaskListItemCard>:
+    padding: 2, 2
+    spacing: 1
+    size_hint_y: None
+    height: task_description.minimum_height
+    TextInput:
+        id: task_description
+        hint_text: "Task description"
+    TextInput:
+        id: duration_to_do
+        hint_text: "Duration"
+    Button:
+        text: "Delete"
+
 
 <MainScreen>:
     canvas.before:
@@ -122,6 +136,51 @@
         Rectangle:
             pos: root.pos
             size: root.size
+    BoxLayout:
+        orientation: "vertical"
+        padding: 4, 4
+        spacing: 2
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: get_color_from_hex("#5D5D5D")
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+            padding: 4, 4
+            spacing: 4
+            IconWidget:
+                icon: app.icon
+                size_hint_x: None
+                width: self.height
+            Button:
+                text: "License"
+                size_hint_x: None
+                width: self.texture_size[0] * 1.2
+                on_release: app.show_license()
+        StackLayout:
+            id: task_list
+            orientation: "lr-tb"
+            padding: 4, 4
+            spacing: 2
+            TaskListItemCard
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 2, 2
+            spacing: 1
+            Button:
+                text: "Add task"
+                size_hint_y: None
+                height: self.texture_size[1] * 1.78
+            Button:
+                text: "Start task"
+                size_hint_y: None
+                height: self.texture_size[1] * 1.78
 
 
 <LicensePopupLayout>:

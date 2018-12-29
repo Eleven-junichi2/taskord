@@ -9,7 +9,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.boxlayout import  BoxLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import (
     ObjectProperty, NumericProperty, StringProperty, ReferenceListProperty)
 from kivy.resources import resource_add_path
