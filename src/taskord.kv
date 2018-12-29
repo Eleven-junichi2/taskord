@@ -127,6 +127,7 @@
         hint_text: "Duration"
     Button:
         text: "Delete"
+        on_release: root.remove_task()
 
 
 <MainScreen>:
@@ -136,6 +137,7 @@
         Rectangle:
             pos: root.pos
             size: root.size
+    task_list: task_list
     BoxLayout:
         orientation: "vertical"
         padding: 4, 4
@@ -166,7 +168,6 @@
             orientation: "lr-tb"
             padding: 4, 4
             spacing: 2
-            TaskListItemCard
         BoxLayout:
             orientation: "vertical"
             size_hint_y: None
@@ -177,6 +178,7 @@
                 text: "Add task"
                 size_hint_y: None
                 height: self.texture_size[1] * 1.78
+                on_release: root.add_task()
             Button:
                 text: "Start task"
                 size_hint_y: None

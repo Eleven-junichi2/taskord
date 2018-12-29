@@ -140,7 +140,12 @@ class LicensePopup(ClosablePopup):
 
 
 class TaskListItemCard(BoxLayout):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def remove_task(self):
+        self.parent.remove_widget(self)
 
 
 class ShowingCurrentTaskLayout(Popup):
@@ -152,7 +157,13 @@ class ShowingCurrentTaskPopup(Popup):
 
 
 class MainScreen(Screen):
-    pass
+    task_list = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def add_task(self):
+        self.task_list.add_widget(TaskListItemCard())
 
 
 class TaskordScreenManager(ScreenManager):
