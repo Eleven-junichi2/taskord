@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/home/eleven_junichi2/.local/share/virtualenvs/taskord-m9H96Y9x/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+}
