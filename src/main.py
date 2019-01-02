@@ -12,8 +12,10 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import (
     ObjectProperty, NumericProperty, StringProperty, ReferenceListProperty)
-from kivy.resources import resource_add_path
+from kivy.resources import resource_add_path, resource_find
 from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 
 __file__ = sys.argv[0]
 resource_add_path(str(Path(__file__).parent / "resources"))
@@ -105,7 +107,9 @@ class MsgPopup(ClosablePopup):
 LICENSE_SHOWING = """
 (C) 2018 Eleven-junichi2:
 https://eleven-junichi2.github.io/
+Property(None)
 
+    def __init__(se
 This app's repository
 https://github.com/Eleven-junichi2/Taskord
 
@@ -140,6 +144,8 @@ class LicensePopup(ClosablePopup):
 
 
 class TaskListItemCard(BoxLayout):
+    task_description = ObjectProperty(None)
+    duration = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -148,12 +154,18 @@ class TaskListItemCard(BoxLayout):
         self.parent.remove_widget(self)
 
 
-class ShowingCurrentTaskLayout(Popup):
-    pass
+class ShowingCurrentTaskPopupLayout(RelativeLayout):
+    task_description = ObjectProperty(None)
+    duration = ObjectProperty(None)
 
 
 class ShowingCurrentTaskPopup(Popup):
-    pass
+    def __init__(self, task_description_text, duration, **kwargs):
+        super().__init__(**kwargs)
+        self.content = ShowingCurrentTaskPopupLayout()
+        self.content.task_description.text = task_description_text
+        self.content.duration.text = duration
+        self.auto_dismiss = False
 
 
 class MainScreen(Screen):
@@ -164,6 +176,32 @@ class MainScreen(Screen):
 
     def add_task(self):
         self.task_list.add_widget(TaskListItemCard())
+
+    def start_tasks(self):
+        sound = SoundLoader.load(resource_find(
+            "sounds/se_maoudamashii_jingle11.wav"))
+        for child in self.task_list.children:
+            error = False
+            if not child.duration.text.isnumeric():
+                popup = MsgPopup("Error: Please input number in duration.")
+                popup.open()
+                error = True
+            if not child.task_description.text:
+                popup = MsgPopup("Error: Please input task description.")
+                popup.open()
+                error = True
+            if error:
+                break
+            popup = ShowingCurrentTaskPopup(
+                child.task_description.text, child.duration.text)
+            popup.open()
+            Clock.schedule_once(popup.dismiss,
+                                int(child.duration.text))
+            Clock.schedule_once(lambda dt: sound.play(),
+                                int(child.duration.text) - 0.5)
+
+        # print(child.task_description.text, child.duration.text)
+# se_maoudamashii_jingle11.mp3
 
 
 class TaskordScreenManager(ScreenManager):

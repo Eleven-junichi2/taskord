@@ -1,4 +1,4 @@
 rm -r "dist/"
-python -m PyInstaller --name tsukushi -F src/main.py
-cp -v "src/tsukushi.kv" "dist/"
+python -m PyInstaller --name taskord -F src/main.py
+cp -v "src/taskord.kv" "dist/"
 cp -v -r "src/resources/" "dist/resources/"
