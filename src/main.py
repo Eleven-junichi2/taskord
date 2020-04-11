@@ -107,9 +107,7 @@ class MsgPopup(ClosablePopup):
 LICENSE_SHOWING = """
 (C) 2018 Eleven-junichi2:
 https://eleven-junichi2.github.io/
-Property(None)
 
-    def __init__(se
 This app's repository
 https://github.com/Eleven-junichi2/Taskord
 
